@@ -1,0 +1,13 @@
+<button type="button" mat-icon-button (click)="fileInput.click()"><mat-icon>upload_file</mat-icon></button>
+
+<input multiple type="file" (change)="onFilesSelected($event.target.files)"  hidden #fileInput/>
+<div *ngFor="let file of filesToUpload; let i = index">
+    <mat-card>
+    <span class="file-summary">{{ file.name }}({{ file.size | bytes }})</span>
+        <div class="upload-progress">
+            <mat-progress-bar
+                    [value]="file.progress"
+            ></mat-progress-bar>
+        </div>
+    </mat-card>
+</div>
