@@ -1,1 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+table {
+  width: 100%;
+}
+
+a {
+  color: white;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.status {
+  &-inactive {
+    color: #e4636a;
+  }
+  &-active {
+    color: #83d17a;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-form-field { width: 100%;}
+//.mat-toolbar {margin-bottom: 10px; margin-top: 10px;}
+.success {
+  background-color: #63a032;
+  color: whitesmoke;
+}
+
+.error {
+  background-color: #e3120b;
+  color: whitesmoke;
+}
+
+.container {
+  //margin: 5px;
+  min-height: 100%;
+  height: 100%;
+}
+
+.separator {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mat-success {
+  background-color: green;
+  color: #fff;
+}
+
+
+
+.mat-info {
+  background-color: #078bcd;
+  color: #fff;
+}
+
+.mat-yellow {
+  background-color: #fecb00;
+  color: black;
+}
+
+.mat-black {
+  background-color: black;
+  color: white;
+}
+
+.mat-selected-row {
+  background-color: rgba(106, 104, 104, 0.91);
+  color: white;
+}
+
+
+mat-cell > span.truncate-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+

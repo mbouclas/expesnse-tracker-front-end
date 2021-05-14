@@ -1,0 +1,54 @@
+<div>
+    <div fxLayout="row wrap">
+        <h1 class="form-heading">Login</h1>
+
+        <div class="error-message" *ngIf="loginError">
+            <p>Bad username password combination!</p>
+        </div>
+
+        <form class="login-form" [formGroup]="LoginForm" (ngSubmit)="login()" *ngIf="!showForgotPassword else forgotPasswordTemplate;">
+
+            <mat-form-field appearance="fill" [hideRequiredMarker]="true" class="w-100 mt-2">
+                <mat-icon matPrefix>account_box</mat-icon>
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="email" Placeholder="email" required>
+                <mat-error *ngIf="email.hasError('required')">Username is required</mat-error>
+                <mat-error *ngIf="email.hasError('invalidEmail')">Invalid email address</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="fill" [hideRequiredMarker]="true" class="w-100 mt-1">
+                <mat-icon matPrefix>lock</mat-icon>
+                <mat-label>Password</mat-label>
+                <input matInput autocomplete="new-password" Placeholder="Password" formControlName="password" type="password" required>
+                <mat-error *ngIf="password.hasError('required')">Password is required</mat-error>
+            </mat-form-field>
+
+            <!-- <mat-checkbox formControlName="rememberMe">remember me:</mat-checkbox> -->
+
+            <div class="mt-2">
+                <mat-grid-list cols="2" rowHeight="2:1">
+                    <mat-grid-tile><button mat-raised-button class="w-100" color="primary" type="submit">LOGIN</button></mat-grid-tile>
+                    <mat-grid-tile><a mat-button color="primary" (click)="showForgotPassword = true;">FORGOT PASSWORD</a></mat-grid-tile>
+                </mat-grid-list>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+<ng-template #forgotPasswordTemplate>
+    <app-small-toolbar color="success" *ngIf="codeSent">An email with instructions was sent to {{lostPasswordEmail.value}}</app-small-toolbar>
+    <form class="login-form" [formGroup]="LostPasswordForm" (ngSubmit)="sendVerificationCode()" *ngIf="!codeSent">
+        <mat-form-field appearance="fill" [hideRequiredMarker]="true" class="w-100 mt-2">
+            <mat-icon matPrefix>account_box</mat-icon>
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="email" Placeholder="email" required>
+            <mat-error *ngIf="lostPasswordEmail.hasError('required')">Username is required</mat-error>
+            <mat-error *ngIf="lostPasswordEmail.hasError('invalidEmail')">Invalid email address</mat-error>
+        </mat-form-field>
+        <app-big-button type="submit"><mat-icon>email</mat-icon> Send Verification Code</app-big-button>
+    </form>
+</ng-template>

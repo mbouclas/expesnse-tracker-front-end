@@ -1,0 +1,30 @@
+
+.form-heading{
+  justify-content: center;
+  align-items: center;
+  color: #fecb00;
+  width: 100%;
+  font-size: 20px;
+}
+
+.mat-form-field {
+  .mat-icon {
+    padding-right: .75em;
+  }
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0.5em 0 !important;
+}
+
+.w-100{
+  width: 100%;
+}
+
+.error-message {
+  color: red;
+}
+
+input:-internal-autofill-selected {
+  background: none;
+}

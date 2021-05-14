@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="row-height" style="margin-bottom: 20px;">
+    <div fxFlex="95" fxLayout="column">
+        <button [type]="type" mat-button mat-raised-button [color]="color" (click)="onClick.emit($event)" [disabled]="disabled">
+
+            <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+            <ng-content></ng-content></button>
+    </div>
+</div>
