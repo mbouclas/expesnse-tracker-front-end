@@ -1,4 +1,4 @@
-const BASE_URL = 'https://et.m-crm.io';
+const BASE_URL = 'https://et-api.m-crm.io';
 export const environment = {
   production: true,
   BASE_URL,
