@@ -82,7 +82,7 @@ export class ExpenseBaseComponent implements OnInit, OnDestroy {
   }
 
   async onImageSelected(selection: ICameraSelection) {
-    const res = await this.attachmentService.saveBase64ToFile(selection.image.base64String, selection.image.format);
+    const res = await this.attachmentService.saveBase64ToFile(selection.image.dataUrl, selection.image.format);
 
     const attachment = new AttachmentModel();
     attachment.url = res.fileName;

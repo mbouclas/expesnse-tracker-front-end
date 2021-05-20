@@ -28,7 +28,7 @@ export class CameraComponent implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Prompt,
       correctOrientation: true,
       webUseInput: false,
@@ -40,10 +40,11 @@ export class CameraComponent implements OnInit {
     // passed to the Filesystem API to read the raw data of the image,
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
     this.img = image;
-    const base64str = `data:image/jpg;base64,${image.base64String}`;
-
+    // const base64str = `data:image/jpg;base64,${image.base64String}`;
+    const base64str = image.dataUrl;
 
     this.generateFromImage(base64str, 200, 200, 0.5, data => {
+
       this.image = this.domSanitizer.bypassSecurityTrustUrl(data);
       this.onSelected.emit({
         image,
