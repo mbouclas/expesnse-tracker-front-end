@@ -26,7 +26,9 @@ export class CameraComponent implements OnInit {
 
   async takePhoto() {
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 70,
+      width: 1024,
+      height: 1024,
       allowEditing: true,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Prompt,
@@ -87,7 +89,7 @@ export class CameraComponent implements OnInit {
   }
 
   getImageSize(data_url) {
-    var head = 'data:image/jpeg;base64,';
+    const head = 'data:image/jpeg;base64,';
     return ((data_url.length - head.length) * 3 / 4 / (1024*1024)).toFixed(4);
   }
 
