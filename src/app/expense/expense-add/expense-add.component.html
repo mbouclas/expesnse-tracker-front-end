@@ -61,6 +61,11 @@
                     <mat-grid-tile-footer fxLayoutAlign="center center" >
                         <button type="button" mat-mini-fab (click)="removeAttachment(idx)"><mat-icon>delete</mat-icon></button>
                         <span class="spacer"></span>
+                        <ng-container *ngIf="attachment.attachment_type.indexOf('image') !== -1">
+                            <button type="button" mat-mini-fab (click)="showPreview(attachment.id)"><mat-icon>preview</mat-icon></button>
+                            <span class="spacer"></span>
+                        </ng-container>
+
                         <button type="button" mat-mini-fab (click)="downloadFile(attachment)" *ngIf="attachment.id"><mat-icon>download</mat-icon></button>
                     </mat-grid-tile-footer>
                 </mat-grid-tile>

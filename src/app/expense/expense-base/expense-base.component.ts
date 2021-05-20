@@ -14,6 +14,8 @@ import {AttachmentModel, IAttachment} from '../../models/attachment.model';
 import {AttachmentService} from '../../attachment/attachment.service';
 import {ICameraSelection} from '../../camera/camera/camera.component';
 import {IOnUploadResponse} from '../../uploader/uploader.service';
+import {PreviewImageComponent} from '../dialogs/preview-image/preview-image.component';
+import {AppSettings} from '../../app.settings';
 
 @Component({
   selector: 'app-expense-base',
@@ -149,5 +151,15 @@ export class ExpenseBaseComponent implements OnInit, OnDestroy {
   async downloadFile(attachment: IAttachment) {
     const url = await this.attachmentService.downloadFile(attachment);
     window.open(url);
+  }
+
+  showPreview(id: number) {
+    this.dialog.open(PreviewImageComponent, {
+      width: (this.isHandset) ? AppSettings.dialogs.handsetWidth : AppSettings.dialogs.defaultWidth,
+      height: this.isHandset ? AppSettings.dialogs.defaultHeight : AppSettings.dialogs.defaultHeight,
+      data: {
+        id
+      }
+    })
   }
 }

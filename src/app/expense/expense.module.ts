@@ -20,6 +20,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {UploaderModule} from '../uploader/uploader.module';
+import { PreviewImageComponent } from './dialogs/preview-image/preview-image.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {UploaderModule} from '../uploader/uploader.module';
         ExpenseAddComponent,
         ExpenseEditComponent,
         ExpenseBaseComponent,
+        PreviewImageComponent,
     ],
     imports: [
         CommonModule,

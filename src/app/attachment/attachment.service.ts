@@ -31,4 +31,8 @@ export class AttachmentService {
   async downloadFile(attachment: IAttachment) {
     return await this.http.get<string>(`${environment.API_ENDPOINT}attachment/download/${attachment.id}`).toPromise();
   }
+
+  async getImageUrl(id: number) {
+    return await this.http.get<string>(`${environment.API_ENDPOINT}attachment/image-url/${id}`).toPromise();
+  }
 }

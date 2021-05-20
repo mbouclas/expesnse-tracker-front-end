@@ -1,0 +1,11 @@
+<div class="mat-dialog-title">
+    Image Preview
+    <span class="spacer"></span>
+    <button type="button" (click)="close()" mat-icon-button><mat-icon>close</mat-icon></button>
+</div>
+<mat-dialog-content>
+    <mat-card>
+        <img [src]="imageUrl" mat-card-image>
+    </mat-card>
+
+</mat-dialog-content>
