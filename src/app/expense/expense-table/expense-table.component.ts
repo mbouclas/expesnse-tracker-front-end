@@ -40,7 +40,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     @Input() maxDate = new Date(Date.now());
     onTableEventHandler = new EventEmitter<any>();
     pageEvent: PageEvent;
-    sidenavOpen = true;
+    sidenavOpen = false;
     public results: IPagination<IExpense>;
     public dataSource = new MatTableDataSource<IExpense>([]);
     public selection = new SelectionModel<IExpense>(true, []);

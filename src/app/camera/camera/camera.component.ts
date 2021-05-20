@@ -31,7 +31,7 @@ export class CameraComponent implements OnInit {
       resultType: CameraResultType.Base64,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      webUseInput: true,
+      webUseInput: false,
       direction: CameraDirection.Rear,
     });
 
