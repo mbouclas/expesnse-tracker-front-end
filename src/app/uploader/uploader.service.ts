@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {BehaviorSubject, ReplaySubject, Subscription} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {IGenericObject} from '../models/generic';
 
 export interface IUploadProgress {
   isLoading?: boolean;
@@ -24,6 +25,12 @@ export interface IFileToUpload extends File {
 }
 
 
+export interface IOnUploadResponse {
+  file: File;
+  success: boolean;
+  response?: IGenericObject;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +41,7 @@ export class UploaderService {
   private uploadInProgressSubject = new BehaviorSubject<boolean>(false);
   uploadInProgress$ = this.uploadInProgressSubject.asObservable();
   public onProgress = new EventEmitter<IOnUploadProgress>();
-  public onFileUploaded = new EventEmitter();
+  public onFileUploaded = new EventEmitter<IOnUploadResponse>();
   public subs = new Subscription();
 
   constructor(private http: HttpClient) { }
@@ -79,15 +86,17 @@ export class UploaderService {
             this.onProgress.emit({ file: file, event: event, progressPercentage, loaded: event.loaded, total: event.total,});
           }
 
-
+          if (event.type === HttpEventType.Response) {
+            this.uploadInProgressSubject.next(false);
+            this.onFileUploaded.emit({file, success: true, response: event.body});
+          }
         },// END SUCCESS
         (error => {
           this.uploadInProgressSubject.next(false);
           this.onFileUploaded.emit({file, success: false});
         }),// END ERROR
         () => {
-          this.uploadInProgressSubject.next(false);
-          this.onFileUploaded.emit({file, success: true});
+
         }
     )
   }

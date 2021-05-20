@@ -1,0 +1,8 @@
+<div class="mat-dialog-title">
+    {{(data && data.id) ? 'Edit Item' : 'Add Item' }}
+</div>
+
+<mat-dialog-content>
+    <app-expense-type-add *ngIf="!data || !data.id" (onSave)="onSave($event)"></app-expense-type-add>
+    <app-expense-type-update *ngIf="data && data.id" [id]="data.id" (onSave)="onSave($event)"></app-expense-type-update>
+</mat-dialog-content>

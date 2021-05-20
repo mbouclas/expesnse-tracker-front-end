@@ -66,6 +66,9 @@ export class LoginComponent implements OnInit {
       console.log(res.reason)
       return;
     }
+
+    // Hack, for some reason after login the router is not loading the components on the view
+    setTimeout(() => location.reload(), 200);
   }
 
   get email() {

@@ -17,6 +17,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormatToDatePipe} from '../helpers/format-to-date.pipe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BytesPipe} from '../helpers/bytes.pipe';
+import { CustomDatePickerHeaderComponent } from './components/custom-date-picker-header/custom-date-picker-header.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 const matModules = [
@@ -30,6 +32,7 @@ const matModules = [
     MatDialogModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSelectModule,
 ];
 
 const exportedDeclarations = [
@@ -43,6 +46,7 @@ const exportedDeclarations = [
 @NgModule({
     declarations: [
         ...exportedDeclarations,
+        CustomDatePickerHeaderComponent,
   ],
     imports: [
         FlexLayoutModule,

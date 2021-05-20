@@ -17,6 +17,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {BootService} from './shared/services/boot.service';
 import {AppStateActions} from './state/app.state';
+import {AppService} from './shared/services/app.service';
 
 
 @NgModule({
@@ -58,10 +59,14 @@ export class AppModule {
         // Triggers after login or JWT refresh on the appInitializer
         AuthService.onLogin.subscribe(async r => {
             if (!r) {return;}
-
             const bootResult = await bootService.boot()
             AppStateActions.setBoot(bootResult);
-        })
+        });
+
+        AppService.refreshBoot.subscribe(async boot => {
+            const bootResult = await bootService.boot()
+            AppStateActions.setBoot(bootResult);
+        });
 
         icons.register('pdf', './assets/icons/pdf.svg');
         icons.register('word', './assets/icons/word.svg');

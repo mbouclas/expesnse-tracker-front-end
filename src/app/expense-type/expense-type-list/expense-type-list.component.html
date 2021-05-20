@@ -1,0 +1,11 @@
+<mat-toolbar>Expense Types
+<span class="spacer"></span>
+    <button type="button" (click)="add()" mat-icon-button><mat-icon>add</mat-icon></button>
+</mat-toolbar>
+
+<mat-nav-list>
+    <mat-list-item *ngFor="let type of expenseTypes$ | async" (click)="edit(type.id)">
+        <h3 mat-line>{{type.title}}</h3>
+        <button mat-icon-button (click)="$event.stopPropagation();delete(type.id)"><mat-icon>delete</mat-icon></button>
+    </mat-list-item>
+</mat-nav-list>

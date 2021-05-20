@@ -10,7 +10,7 @@ import {getFormValidationErrors} from '../../helpers/getFormValidationErrors';
     styleUrls: ['./expense-add.component.scss']
 })
 export class ExpenseAddComponent extends ExpenseBaseComponent {
-    debugMode = true;
+    debugMode = false;
     constructor(injector: Injector) {
         super(injector);
     }

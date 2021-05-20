@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {IGenericObject, IPagination} from '../models/generic';
+import {IGenericObject, IPagination, ISuccessResponse} from '../models/generic';
 import {environment} from '../../environments/environment';
 import {ExpenseModel, IExpense} from '../models/expense.model';
 import {createFilterUrl} from '../helpers/serializers';
@@ -32,5 +32,9 @@ export class ExpenseService {
 
   async update(item: ExpenseModel) {
     return await this.http.patch<ExpenseModel>(`${environment.API_ENDPOINT}expense/${item.id}`, item).toPromise();
+  }
+
+  async delete(id: number) {
+    return await this.http.delete<ISuccessResponse>(`${environment.API_ENDPOINT}expense/${id}`).toPromise();
   }
 }

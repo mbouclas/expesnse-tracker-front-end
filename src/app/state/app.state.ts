@@ -30,7 +30,7 @@ export const store = create<AppState>(devtools(() => ({
 export const AuthStateActions = {
     setUser: (payload: IAuthUser) => store.setState({user: payload}),
     setToken: (token: string) => store.setState({...store.getState(), ...{token}}),
-    logout: () => store.setState({user: null}),
+    logout: () => store.setState({user: null, expenseTypes: [], vendors: []}),
 
 }
 

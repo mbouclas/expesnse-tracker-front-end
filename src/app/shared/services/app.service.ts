@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 import {ComponentType} from '@angular/cdk/overlay';
@@ -13,6 +13,7 @@ export interface ISnackBarMessage {
 
 @Injectable({providedIn: 'root'})
 export class AppService {
+    public static refreshBoot = new EventEmitter<boolean>();
     public snackBarEmitter = new EventEmitter<ISnackBarMessage>();
     public static defaultDialogWidth = '80vw';
     constructor(

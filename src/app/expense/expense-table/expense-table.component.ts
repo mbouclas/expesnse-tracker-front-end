@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, EventEmitter, OnDestroy} from '@angular/core';
 import {IExpense} from '../../models/expense.model';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -12,6 +12,11 @@ import {Observable} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl, FormGroup} from '@angular/forms';
 import findIndex from 'lodash.findindex';
+import {ExportService} from '../export.service';
+import {AppService} from '../../shared/services/app.service';
+import {CustomDatePickerHeaderComponent} from '../../shared/components/custom-date-picker-header/custom-date-picker-header.component';
+import {IExpenseType} from '../../models/expense-type.model';
+import {IVendor} from '../../models/vendor.model';
 
 export interface IExpenseTableConfig {
 }
@@ -21,9 +26,11 @@ export interface IExpenseTableConfig {
     templateUrl: './expense-table.component.html',
     styleUrls: ['./expense-table.component.scss']
 })
-export class ExpenseTableComponent implements OnInit {
+export class ExpenseTableComponent implements OnInit, OnDestroy {
     @Input() tableName = 'Expenses';
     @Select('isHandset') isHandset$: Observable<boolean>;
+    @Select('expenseTypes') expenseTypes$: Observable<IExpenseType[]>;
+    @Select('vendors') vendors$: Observable<IVendor[]>;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) tablePaginator: MatPaginator;
     @Input() data: IPagination<IExpense>;
@@ -33,7 +40,7 @@ export class ExpenseTableComponent implements OnInit {
     @Input() maxDate = new Date(Date.now());
     onTableEventHandler = new EventEmitter<any>();
     pageEvent: PageEvent;
-    sidenavOpen = false;
+    sidenavOpen = true;
     public results: IPagination<IExpense>;
     public dataSource = new MatTableDataSource<IExpense>([]);
     public selection = new SelectionModel<IExpense>(true, []);
@@ -52,25 +59,38 @@ export class ExpenseTableComponent implements OnInit {
     });
     isHandset = false;
     dateFormat: string;
+    CustomHeader = CustomDatePickerHeaderComponent;
+    public expenseTypes: IExpenseType[] = [];
+    public vendors: IVendor[] = [];
+    private _subscriptions :any[] = [];
 
     constructor(
         private service: ExpenseService,
         private dialog: MatDialog,
+        private exportService: ExportService,
+        private appService: AppService,
     ) {
 
     }
 
     async ngOnInit() {
         this.displayedColumns = (this.columns.length > 0) ? this.columns : this.displayedColumns;
-        this.isHandset$.subscribe(isIt => {
+        this._subscriptions.push(this.isHandset$.subscribe(isIt => {
             this.isHandset = isIt;
             this.dateFormat = (!isIt) ? '' : 'DD';
             if (isIt) {
                 this.displayedColumns = ['selectMultiple','title', 'price', 'updated_at'];
             }
-        });
+        }));
+
+        // this.expenseTypes$.subscribe(types => this.expenseTypes = types);
+        // this.vendors$.subscribe(vendors => this.vendors = vendors);
 
         await this.getData();
+    }
+
+    ngOnDestroy() {
+        this._subscriptions.forEach(sub => sub.unsubscribe());
     }
 
     async getData() {
@@ -78,7 +98,7 @@ export class ExpenseTableComponent implements OnInit {
         this.results = await this.service.find({
             ...{with: ['expenseTypes', 'vendor',]}, ...this.filters
         });
-        console.log(this.results);
+
         this.dataSource.data = this.results.data;
         d.close();
     }
@@ -159,5 +179,19 @@ export class ExpenseTableComponent implements OnInit {
 
     isRowSelected(id: number) {
         return findIndex(this.selection.selected, {id}) !== -1;
+    }
+
+    async downloadAsZip() {
+        const result = await this.exportService.exportMany(this.selection.selected.map(i => i.id));
+        this.appService.showSnackBar('Zip file created');
+        window.open(result.zipFileName);
+    }
+
+    vendorSelected(vendor: IVendor) {
+        this.filters.vendorId = vendor.id;
+    }
+
+    expenseTypeSelected(expenseType: IExpenseType) {
+        this.filters.expenseTypeId = expenseType.id;
     }
 }

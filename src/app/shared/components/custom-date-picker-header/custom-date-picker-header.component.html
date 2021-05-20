@@ -1,0 +1,26 @@
+<div class="example-header">
+    <button mat-icon-button class="example-double-arrow" (click)="previousClicked('year')">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="previousClicked('month')">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <span class="example-header-label">{{periodLabel}}</span>
+    <button mat-icon-button (click)="nextClicked('month')">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+    <button mat-icon-button class="example-double-arrow" (click)="nextClicked('year')">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+
+</div>
+<div class="example-header">
+    <mat-form-field appearance="fill">
+        <mat-label>Select Date Range</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let opt of customPresets" (onSelectionChange)="selectRange(opt)">{{opt}}</mat-option>
+    </mat-select>
+    </mat-form-field>
+</div>

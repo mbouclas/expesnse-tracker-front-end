@@ -4,6 +4,7 @@
         ({{results.totalPrice | currency}})
     </span>
     <span class="spacer"></span>
+    <button mat-icon-button (click)="downloadAsZip()" matTooltip="Download zip file"><mat-icon>download</mat-icon></button>
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>filter_list</mat-icon></button>
 </mat-toolbar>
 
@@ -26,11 +27,33 @@
                        (dateChange)="dateRangeChange()">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker touchUi></mat-date-range-picker>
+            <mat-date-range-picker #picker touchUi [calendarHeaderComponent]="CustomHeader"></mat-date-range-picker>
 
             <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
         </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Expense Type</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let expenseType of expenseTypes$ | async" [value]="expenseType.id" (onSelectionChange)="expenseTypeSelected(expenseType)"
+
+                >{{expenseType.title}}</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Vendor</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let vendor of vendors$ | async" [value]="vendor.id" (onSelectionChange)="vendorSelected(vendor)"
+
+                >{{vendor.title}}</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+
+
 
         <button mat-button (click)="applyFilters()">Apply Filters</button>
 
@@ -69,7 +92,9 @@
                       *ngIf="displayedColumns.indexOf('type') !== -1">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
             <td mat-cell *matCellDef="let element">
-                {{element.expenseType.title}}
+                <ng-container *ngFor="let type of element.expenseTypes; let last=last">
+                    {{type.title}} <ng-container *ngIf="!last">, </ng-container>
+                </ng-container>
             </td>
         </ng-container>
 

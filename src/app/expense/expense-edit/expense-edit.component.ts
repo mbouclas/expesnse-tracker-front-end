@@ -2,6 +2,8 @@ import {Component, Injector} from '@angular/core';
 import {ExpenseBaseComponent} from '../expense-base/expense-base.component';
 import findIndex from 'lodash.findindex';
 import {AttachmentModel, IAttachment} from '../../models/attachment.model';
+import {LoadingDialogComponent} from '../../shared/components/dialogs/loading-dialog/loading-dialog.component';
+import {ExportService} from '../export.service';
 
 
 @Component({
@@ -10,10 +12,11 @@ import {AttachmentModel, IAttachment} from '../../models/attachment.model';
   styleUrls: ['./expense-edit.component.scss']
 })
 export class ExpenseEditComponent extends ExpenseBaseComponent {
-  debugMode = true;
+  debugMode = false;
 
   constructor(
       injector: Injector,
+      private exportService: ExportService,
   ) {
     super(injector);
 
@@ -43,8 +46,10 @@ export class ExpenseEditComponent extends ExpenseBaseComponent {
   }
 
   async save() {
-    console.log(this.form.getRawValue())
-    const res = await this.service.update(this.item);
+    const d = this.dialog.open(LoadingDialogComponent);
+    await this.service.update(this.item);
+    d.close();
+    this.appService.showSnackBar('Saved');
   }
 
   setupAttachments() {
@@ -77,5 +82,13 @@ export class ExpenseEditComponent extends ExpenseBaseComponent {
     const attachment = new AttachmentModel();
 
     return attachment;
+  }
+
+  async downloadAsZip() {
+    await this.exportService.export(this.item.id);
+  }
+
+  async emailAsZip() {
+
   }
 }

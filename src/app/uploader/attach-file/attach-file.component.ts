@@ -1,12 +1,6 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {AuthService} from '../../auth/auth.service';
-import {IFileToUpload, UploaderService} from '../uploader.service';
+import {IFileToUpload, IOnUploadResponse, UploaderService} from '../uploader.service';
 
-export interface IFileUploadResult {
-  file: File;
-  success: boolean;
-}
 
 
 
@@ -16,13 +10,8 @@ export interface IFileUploadResult {
   styleUrls: ['./attach-file.component.scss']
 })
 export class AttachFileComponent implements OnInit {
-  @Output() onFileUploaded = new EventEmitter<IFileUploadResult>();
+  @Output() onFileUploaded = new EventEmitter<IOnUploadResponse>();
   @Output() onUploadsComplete = new EventEmitter<boolean>();
-
-  uploadEndPoint = `${environment.API_ENDPOINT}uploads/file`;
-  httpRequestHeaders = {
-    'X-JWT-Token': `${AuthService.currentUser().token}`
-  };
   filesToUpload: IFileToUpload[] = [];
   uploadUnderWay = false;
 
@@ -45,11 +34,10 @@ export class AttachFileComponent implements OnInit {
     this.uploadService.onProgress.subscribe((progress) => {
       const idx = this.filesToUpload.indexOf(progress.file as any);
       this.filesToUpload[idx].progress = progress.progressPercentage;
-      console.log(idx, progress.total, progress.loaded, `${progress.progressPercentage}%`);
     });
 
     this.uploadService.onFileUploaded.subscribe(result => {
-      const idx = this.filesToUpload.indexOf(result.file);
+      const idx = this.filesToUpload.indexOf(result.file as IFileToUpload);
       this.filesToUpload.splice(idx, 1);
       this.onFileUploaded.emit(result);
 

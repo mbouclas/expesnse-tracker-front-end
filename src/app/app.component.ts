@@ -3,9 +3,11 @@ import {Select} from './decorators/select.decorator';
 import {AppStateActions, IAuthUser} from './state/app.state';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {AuthService} from './auth/auth.service';
-import {map, tap} from 'rxjs/operators';
+import {filter, map, mergeMap, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import { Plugins } from '@capacitor/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -15,6 +17,7 @@ import { Plugins } from '@capacitor/core';
 export class AppComponent implements OnInit {
     @Select('user') user$: Observable<IAuthUser>;
     @ViewChild('drawer') drawer: any;
+    title = `Expense Tracker`;
 
     public isHandset$: Observable<boolean> = this.breakpointObserver
         .observe(Breakpoints.Handset)
@@ -28,8 +31,22 @@ export class AppComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private breakpointObserver: BreakpointObserver,
+        private titleService: Title,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
     ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = function(){
+            return false;
+        }
 
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof NavigationEnd) {
+                // trick the Router into believing it's last link wasn't previously loaded
+                this.router.navigated = false;
+                // if you need to scroll back to top, here is the right place
+                window.scrollTo(0, 0);
+            }
+        });
     }
 
     async ngOnInit() {
@@ -37,7 +54,25 @@ export class AppComponent implements OnInit {
             AppStateActions.setIsHandset(res);
             this.isHandset = res;
         })
-        // this.user$.subscribe(res => console.log(res));
+
+        this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+                map(() => this.activatedRoute),
+                map(route => {
+                    while (route.firstChild) {
+                        route = route.firstChild;
+                    }
+                    return route;
+                }),
+                filter(route => route.outlet === 'primary'),
+                mergeMap(route => route.data)
+            )
+            .subscribe(event => {
+                const part = (event.title) ? `| ${event['title']}` : '';
+                this.titleService.setTitle(`${this.title} ${part}` || this.title);
+            });
+
     }
 
     // https://stackblitz.com/edit/angular-closing-side-nav-in-mobile?file=app%2Fsidenav-responsive-example.html

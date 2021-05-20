@@ -2,7 +2,6 @@ import {Injector, NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './home/home/home.component';
-import {DefaultComponent} from './layout/default/default.component';
 
 const routes: Routes = [
     {
