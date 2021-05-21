@@ -17,6 +17,7 @@ import {AppService} from '../../shared/services/app.service';
 import {CustomDatePickerHeaderComponent} from '../../shared/components/custom-date-picker-header/custom-date-picker-header.component';
 import {IExpenseType} from '../../models/expense-type.model';
 import {IVendor} from '../../models/vendor.model';
+import {MatSelectChange} from '@angular/material/select';
 
 export interface IExpenseTableConfig {
 }
@@ -193,11 +194,22 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
         window.open(result.zipFileName);
     }
 
-    vendorSelected(vendor: IVendor) {
-        this.filters.vendorId = vendor.id;
+
+    expenseTypeSelected($event: MatSelectChange) {
+        if (typeof $event.value === 'string') {
+            delete this.filters.expenseTypeId;
+            return;
+        }
+
+        this.filters.expenseTypeId = $event.value;
     }
 
-    expenseTypeSelected(expenseType: IExpenseType) {
-        this.filters.expenseTypeId = expenseType.id;
+    vendorSelected($event: MatSelectChange) {
+        if (typeof $event.value === 'string') {
+            delete this.filters.vendorId;
+            return;
+        }
+
+        this.filters.vendorId = $event.value;
     }
 }
