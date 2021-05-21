@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Select} from '../../decorators/select.decorator';
 import {Observable} from 'rxjs';
-import {IExpenseType} from '../../models/expense-type.model';
-import {MatDialog} from '@angular/material/dialog';
-import {ExpenseTypeDialogComponent} from '../dialogs/expense-type-dialog/expense-type-dialog.component';
+import {IVendor} from '../../models/vendor.model';
+import {Select} from '../../decorators/select.decorator';
 import {AppSettings} from '../../app.settings';
+import {MatDialog} from '@angular/material/dialog';
+import {VendorService} from '../vendor.service';
 import {AppService} from '../../shared/services/app.service';
-import {ExpenseTypeService} from '../expense-type.service';
+import {VendorDialogComponent} from '../dialogs/vendor-dialog/vendor-dialog.component';
 
 @Component({
-  selector: 'app-expense-type-list',
-  templateUrl: './expense-type-list.component.html',
-  styleUrls: ['./expense-type-list.component.scss']
+  selector: 'app-vendor-list',
+  templateUrl: './vendor-list.component.html',
+  styleUrls: ['./vendor-list.component.scss']
 })
-export class ExpenseTypeListComponent implements OnInit, OnDestroy {
-  @Select('expenseTypes') expenseTypes$: Observable<IExpenseType[]>;
+export class VendorListComponent implements OnInit, OnDestroy {
+  @Select('vendors') vendors$: Observable<IVendor[]>;
   @Select('isHandset') isHandset$: Observable<boolean>;
   private _subscriptions :any[] = [];
   public isHandset = false;
@@ -23,10 +23,10 @@ export class ExpenseTypeListComponent implements OnInit, OnDestroy {
 
   constructor(
       private dialog: MatDialog,
-      private service: ExpenseTypeService,
+      private service: VendorService,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._subscriptions.push(this.isHandset$.subscribe(isIt => {
       this.dialogWidth = (isIt) ? AppSettings.dialogs.handsetWidth : AppSettings.dialogs.defaultWidth;
       this.dialogHeight = (isIt) ? AppSettings.dialogs.defaultHeight : AppSettings.dialogs.defaultHeight;
@@ -48,7 +48,7 @@ export class ExpenseTypeListComponent implements OnInit, OnDestroy {
   }
 
   edit(id: number) {
-    this.dialog.open(ExpenseTypeDialogComponent, {
+    this.dialog.open(VendorDialogComponent, {
       width: this.dialogWidth,
       height: this.dialogHeight,
       data: {
@@ -59,7 +59,7 @@ export class ExpenseTypeListComponent implements OnInit, OnDestroy {
   }
 
   add() {
-    const d = this.dialog.open(ExpenseTypeDialogComponent, {
+    const d = this.dialog.open(VendorDialogComponent, {
       width: this.dialogWidth,
       height: this.dialogHeight,
       data: {
@@ -67,4 +67,5 @@ export class ExpenseTypeListComponent implements OnInit, OnDestroy {
       }
     }).componentInstance.onSaved.subscribe(item => AppService.refreshBoot.emit(true));
   }
+
 }

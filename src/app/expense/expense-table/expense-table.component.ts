@@ -12,7 +12,7 @@ import {Observable} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl, FormGroup} from '@angular/forms';
 import findIndex from 'lodash.findindex';
-import {ExportService} from '../export.service';
+import {ExportService, IExportResult} from '../export.service';
 import {AppService} from '../../shared/services/app.service';
 import {CustomDatePickerHeaderComponent} from '../../shared/components/custom-date-picker-header/custom-date-picker-header.component';
 import {IExpenseType} from '../../models/expense-type.model';
@@ -168,10 +168,6 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
         await this.getData();
     }
 
-    buttonClicked() {
-        console.log('hi')
-    }
-
     async resetFilters() {
         this.filters = Object.assign({}, this.defaultFilters);
         await this.getData();
@@ -182,7 +178,17 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     }
 
     async downloadAsZip() {
-        const result = await this.exportService.exportMany(this.selection.selected.map(i => i.id));
+        let result: IExportResult;
+
+        // Export selected ids
+        if (this.selection.selected.length !== 0) {
+            result = await this.exportService.exportMany(this.selection.selected.map(i => i.id));
+        }
+        // Export based on the filter
+        else {
+            result = await this.exportService.exportByFilter(this.filters);
+        }
+
         this.appService.showSnackBar('Zip file created');
         window.open(result.zipFileName);
     }

@@ -1,0 +1,24 @@
+<div *ngIf="debugMode">{{item | json}}</div>
+<mat-toolbar *ngIf="item.id">
+    {{item.title}}
+    <span class="spacer"></span>
+
+</mat-toolbar>
+
+<form [formGroup]="form" (submit)="save()">
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title">
+                <mat-error *ngIf="getError('title')">Field is required</mat-error>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="separator"></div>
+    <app-big-button type="submit">
+        <mat-icon>save</mat-icon>
+        Save
+    </app-big-button>
+</form>

@@ -1,0 +1,11 @@
+<mat-toolbar>Vendors
+    <span class="spacer"></span>
+    <button type="button" (click)="add()" mat-icon-button><mat-icon>add</mat-icon></button>
+</mat-toolbar>
+
+<mat-nav-list>
+    <mat-list-item *ngFor="let vendor of vendors$ | async" (click)="edit(vendor.id)">
+        <h3 mat-line>{{vendor.title}}</h3>
+        <button mat-icon-button (click)="$event.stopPropagation();delete(vendor.id)"><mat-icon>delete</mat-icon></button>
+    </mat-list-item>
+</mat-nav-list>

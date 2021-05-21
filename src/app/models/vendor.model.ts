@@ -5,3 +5,11 @@ export interface IVendor {
     created_at: Date
     updated_at: Date
 }
+
+export class VendorModel implements IVendor {
+    created_at: Date;
+    vendor_type: string
+    id: number;
+    title: string;
+    updated_at: Date;
+}

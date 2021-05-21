@@ -10,6 +10,7 @@ const routes: Routes = [
             {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
             {path: 'expense', loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule)},
             {path: 'expense-type', loadChildren: () => import('./expense-type/expense-type.module').then(m => m.ExpenseTypeModule)},
+            {path: 'vendor', loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)},
             {path: 'attachment', loadChildren: () => import('./attachment/attachment.module').then(m => m.AttachmentModule)},
             {path: 'search', loadChildren: () => import('./search/search.module').then(m => m.SearchModule)},
         ]
