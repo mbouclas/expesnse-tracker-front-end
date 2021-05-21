@@ -8,6 +8,8 @@ import {Observable} from 'rxjs';
 import { Plugins } from '@capacitor/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {SwUpdate} from '@angular/service-worker';
+import {AppService} from './shared/services/app.service';
 
 @Component({
     selector: 'app-root',
@@ -34,6 +36,8 @@ export class AppComponent implements OnInit {
         private titleService: Title,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private swUpdate: SwUpdate,
+        private appService: AppService,
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = function(){
             return false;
@@ -50,6 +54,12 @@ export class AppComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.swUpdate.available.subscribe(event => {
+            this.appService.showSnackBar('New Update found. Reloading app', 'info');
+            setTimeout(() => location.reload(true), 2000);
+
+        });
+
         this.isHandset$.subscribe(res => {
             AppStateActions.setIsHandset(res);
             this.isHandset = res;

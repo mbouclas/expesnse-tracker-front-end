@@ -1,6 +1,6 @@
 {
-  "name": "expense-tracker-ui",
-  "short_name": "expense-tracker-ui",
+  "name": "Expense Tracker",
+  "short_name": "Expense Tracker",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
