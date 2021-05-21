@@ -46,7 +46,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     public dataSource = new MatTableDataSource<IExpense>([]);
     public selection = new SelectionModel<IExpense>(true, []);
     defaultFilters: IFilterOptions = {
-        orderBy: 'created_at',
+        orderBy: 'purchased_at',
         way: 'desc',
         page: 1,
         limit: 10,
@@ -157,7 +157,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
     }
 
     async dateRangeChange() {
-        this.filters.created_at = {
+        this.filters.purchased_at = {
             min: (this.range.value.start) ? this.range.value.start.toISOString() : undefined,
             max: (this.range.value.end) ? this.range.value.end.toISOString() : new Date(Date.now()).toISOString()
         };

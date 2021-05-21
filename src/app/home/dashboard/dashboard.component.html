@@ -1,1 +1,37 @@
-<p>dashboard works!</p>
+<mat-grid-list [cols]="isHandset ? 2 : 4">
+    <mat-grid-tile [colspan]="2" *ngIf="expenseTypeData.length > 0"
+                   [rowspan]="1">
+        <mat-grid-tile-header>Expenses By Type</mat-grid-tile-header>
+        <ngx-charts-pie-chart
+                [view]="view"
+                [results]="expenseTypeData"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-pie-chart>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2"
+                   [rowspan]="1">
+        <mat-grid-tile-header>Expenses By Vendor</mat-grid-tile-header>
+        <ngx-charts-pie-chart
+                [view]="view"
+                [results]="vendorData"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+        >
+        </ngx-charts-pie-chart>
+    </mat-grid-tile>
+</mat-grid-list>
+

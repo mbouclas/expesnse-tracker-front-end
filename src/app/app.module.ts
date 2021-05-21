@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import {BootService} from './shared/services/boot.service';
 import {AppStateActions} from './state/app.state';
 import {AppService} from './shared/services/app.service';
+import {HomeModule} from './home/home.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {AppService} from './shared/services/app.service';
     imports: [
         BrowserModule,
         AppRoutingModule,
+        HomeModule,
         HttpClientModule,
         LayoutModule,
         BrowserAnimationsModule,

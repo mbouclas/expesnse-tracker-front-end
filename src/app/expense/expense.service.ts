@@ -8,6 +8,12 @@ import {createFilterUrl} from '../helpers/serializers';
 export interface IExpenseFilters {
 }
 
+export interface IGroupedData {
+  instances: number;
+  total: number;
+  title: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,5 +42,13 @@ export class ExpenseService {
 
   async delete(id: number) {
     return await this.http.delete<ISuccessResponse>(`${environment.API_ENDPOINT}expense/${id}`).toPromise();
+  }
+
+  async groupByVendor() {
+    return this.http.get<IGroupedData[]>(`${environment.API_ENDPOINT}expense/group-by-vendor`).toPromise();
+  }
+
+  async groupByType() {
+    return this.http.get<IGroupedData[]>(`${environment.API_ENDPOINT}expense/group-by-type`).toPromise();
   }
 }
