@@ -6,7 +6,7 @@ import {getFormValidationErrors} from '../../helpers/getFormValidationErrors';
 
 @Component({
     selector: 'app-expense-add',
-    templateUrl: './expense-add.component.html',
+    templateUrl: '../expense-base/expense-base.component.html',
     styleUrls: ['./expense-add.component.scss']
 })
 export class ExpenseAddComponent extends ExpenseBaseComponent {

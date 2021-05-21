@@ -46,6 +46,7 @@ export class ExpenseBaseComponent implements OnInit, OnDestroy {
   public isHandset = false;
   protected isReady = false;
   protected _subscriptions :any[] = [];
+  public maxDate = new Date();
 
   constructor(protected injector: Injector) {
     this.formBuilder = injector.get<FormBuilder>((FormBuilder));
@@ -80,6 +81,7 @@ export class ExpenseBaseComponent implements OnInit, OnDestroy {
       price: [this.item.price, [Validators.required]],
       expenseTypes: [this.item.expenseTypes],
       vendorId: [this.item.vendorId],
+      purchased_at: [this.item.purchased_at],
     });
   }
 
@@ -162,4 +164,6 @@ export class ExpenseBaseComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  async save() {}
 }

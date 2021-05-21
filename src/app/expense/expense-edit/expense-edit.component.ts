@@ -8,7 +8,7 @@ import {ExportService} from '../export.service';
 
 @Component({
   selector: 'app-expense-edit',
-  templateUrl: '../expense-add/expense-add.component.html',
+  templateUrl: '../expense-base/expense-base.component.html',
   styleUrls: ['./expense-edit.component.scss']
 })
 export class ExpenseEditComponent extends ExpenseBaseComponent {

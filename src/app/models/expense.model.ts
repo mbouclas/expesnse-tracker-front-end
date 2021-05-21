@@ -16,6 +16,7 @@ export interface IExpense {
     user?: IUser;
     expenseTypes?: IExpenseType[];
     vendor?: IVendor;
+    purchased_at: Date;
 }
 
 export class ExpenseModel implements IExpense {
@@ -27,6 +28,7 @@ export class ExpenseModel implements IExpense {
     updated_at: Date;
     userId: number;
     vendorId: number | null;
+    purchased_at = new Date();
     expenseTypes: IExpenseType[] = [];
     attachments?: IAttachment[] = [];
 }

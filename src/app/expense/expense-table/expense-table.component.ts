@@ -51,7 +51,7 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
         limit: 10,
     };
     filters: IFilterOptions = Object.assign({}, this.defaultFilters);
-    displayedColumns: string[] = ['selectMultiple','id','title', 'type','vendor' ,'price', 'updated_at'];
+    displayedColumns: string[] = ['selectMultiple','id','title', 'type','vendor' ,'price','purchased_at', 'updated_at'];
     pageSizeOptions = [10, 30, 50, 80, 100];
     range = new FormGroup({
         start: new FormControl(),
