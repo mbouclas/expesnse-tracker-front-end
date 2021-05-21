@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     async ngOnInit() {
         this.swUpdate.available.subscribe(event => {
             this.appService.showSnackBar('New Update found. Reloading app', 'info');
-            setTimeout(() => location.reload(true), 2000);
+            setTimeout(() => location.reload(), 2000);
 
         });
 
