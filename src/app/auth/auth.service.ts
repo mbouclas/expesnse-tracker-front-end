@@ -5,6 +5,8 @@ import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {IRequestResponse} from '../models/generic';
 import {debug} from '../helpers/debug';
+import {CookieService} from 'ngx-cookie-service';
+import {AppInjector} from '../helpers/setAppInjector';
 
 
 @Injectable({
@@ -21,8 +23,10 @@ export class AuthService {
     }
 
     static getAuthTokenFromLocalStorage() {
+        const cookieService = AppInjector.get<CookieService>(CookieService);
         try {
-            return JSON.parse(localStorage.getItem('token'));
+            // return JSON.parse(localStorage.getItem('token'));
+            return JSON.parse(cookieService.get('token'));
         } catch (e) {
             return null;
         }
@@ -41,8 +45,10 @@ export class AuthService {
     }
 
     setTokenToStorage(token: IAuthUser) {
+        const cookieService = AppInjector.get<CookieService>(CookieService);
         try {
-            localStorage.setItem('token', JSON.stringify(token));
+            cookieService.set('token', JSON.stringify(token));
+            // localStorage.setItem('token', JSON.stringify(token));
             return this;
         } catch (e) {
             return this;
@@ -77,6 +83,7 @@ export class AuthService {
     }
 
     async logout() {
+        const cookieService = AppInjector.get<CookieService>(CookieService);
         // Hit the revoke token url
         try {
             await this.http.post<IRequestResponse>(`${environment.BASE_URL}/oauth/revoke-token`, {token: store.getState().user.token}, {withCredentials: true}).toPromise();
@@ -86,7 +93,8 @@ export class AuthService {
         }
 
         AuthStateActions.logout();
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
+        cookieService.delete('token');
         this.stopRefreshTokenTimer();
         return await this.router.navigate(['/login']);
     }

@@ -74,6 +74,7 @@ export class ExpenseEditComponent extends ExpenseBaseComponent {
         const idx = findIndex(this.expenseTypes, {id: item.id});
         return this.expenseTypes[idx];
       });
+
       this.form.controls.expenseTypes.setValue(this.item.expenseTypes);
     }
   }

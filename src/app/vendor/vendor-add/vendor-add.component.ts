@@ -1,5 +1,6 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {VendorBaseComponent} from '../vendor-base/vendor-base.component';
+import {AppService} from '../../shared/services/app.service';
 
 @Component({
   selector: 'app-vendor-add',
@@ -27,7 +28,7 @@ export class VendorAddComponent extends VendorBaseComponent {
     const res = await this.service.store(this.item);
     this.appService.showSnackBar('Saved...');
     this.onSave.emit(res);
-
+    AppService.refreshBoot.emit(true);
     d.close();
   }
 }

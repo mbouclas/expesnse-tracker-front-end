@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = true;
-  legendPosition: string = 'right';
+  legendPosition: string = 'below';
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };

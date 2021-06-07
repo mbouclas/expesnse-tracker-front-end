@@ -4,6 +4,7 @@ import {createFilterUrl} from '../../helpers/serializers';
 import {environment} from '../../../environments/environment';
 import {IExpenseType} from '../../models/expense-type.model';
 import {IVendor} from '../../models/vendor.model';
+import {AppService} from './app.service';
 
 export interface IBootResult {
     expenseTypes: IExpenseType[];
@@ -16,7 +17,10 @@ export class BootService {
     }
 
     async boot() {
-        return this.http.get<IBootResult>(createFilterUrl(`${environment.API_ENDPOINT}boot`, {})).toPromise();
+        const res = this.http.get<IBootResult>(createFilterUrl(`${environment.API_ENDPOINT}boot`, {})).toPromise();
+        AppService.stateRefreshed.emit(true);
+
+        return res;
     }
 
 }

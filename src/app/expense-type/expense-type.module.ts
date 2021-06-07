@@ -19,7 +19,7 @@ import {MatInputModule} from '@angular/material/input';
         ExpenseTypeDialogComponent,
         ExpenseTypeAddComponent,
         ExpenseTypeUpdateComponent,
-        ExpenseTypeBaseComponent
+        ExpenseTypeBaseComponent,
     ],
     imports: [
         CommonModule,

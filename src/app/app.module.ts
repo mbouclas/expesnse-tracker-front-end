@@ -19,6 +19,7 @@ import {BootService} from './shared/services/boot.service';
 import {AppStateActions} from './state/app.state';
 import {AppService} from './shared/services/app.service';
 import {HomeModule} from './home/home.module';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {HomeModule} from './home/home.module';
 
     ],
     providers: [
+        CookieService,
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService, BootService] },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

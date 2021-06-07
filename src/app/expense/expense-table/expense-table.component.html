@@ -35,8 +35,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Expense Type</mat-label>
-            <mat-select (selectionChange)="expenseTypeSelected($event)">
-                <mat-option value="">Select One</mat-option>
+            <mat-select (selectionChange)="expenseTypeSelected($event)" multiple>
                 <mat-option *ngFor="let expenseType of expenseTypes$ | async" [value]="expenseType.id"
 
                 >{{expenseType.title}}</mat-option>
@@ -46,8 +45,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Vendor</mat-label>
-            <mat-select (selectionChange)="vendorSelected($event)">
-                <mat-option value="">Select One</mat-option>
+            <mat-select (selectionChange)="vendorSelected($event)" multiple>
                 <mat-option *ngFor="let vendor of vendors$ | async" [value]="vendor.id"
 
                 >{{vendor.title}}</mat-option>

@@ -1,5 +1,6 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {ExpenseTypeBaseComponent} from '../expense-type-base/expense-type-base.component';
+import {AppService} from '../../shared/services/app.service';
 
 @Component({
   selector: 'app-expense-type-add',
@@ -27,7 +28,7 @@ export class ExpenseTypeAddComponent extends ExpenseTypeBaseComponent {
     const res = await this.service.store(this.item);
     this.appService.showSnackBar('Saved...');
     this.onSave.emit(res);
-
+    AppService.refreshBoot.emit(true);
     d.close();
   }
 }

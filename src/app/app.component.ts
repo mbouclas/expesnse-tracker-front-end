@@ -5,7 +5,6 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/lay
 import {AuthService} from './auth/auth.service';
 import {filter, map, mergeMap, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import { Plugins } from '@capacitor/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {SwUpdate} from '@angular/service-worker';
