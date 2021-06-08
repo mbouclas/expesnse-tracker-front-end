@@ -23,10 +23,10 @@ export class AuthService {
     }
 
     static getAuthTokenFromLocalStorage() {
-        const cookieService = AppInjector.get<CookieService>(CookieService);
+        // const cookieService = AppInjector.get<CookieService>(CookieService);
         try {
-            // return JSON.parse(localStorage.getItem('token'));
-            return JSON.parse(cookieService.get('token'));
+            return JSON.parse(localStorage.getItem('token'));
+            // return JSON.parse(cookieService.get('token'));
         } catch (e) {
             return null;
         }
@@ -45,10 +45,10 @@ export class AuthService {
     }
 
     setTokenToStorage(token: IAuthUser) {
-        const cookieService = AppInjector.get<CookieService>(CookieService);
+        // const cookieService = AppInjector.get<CookieService>(CookieService);
         try {
-            cookieService.set('token', JSON.stringify(token));
-            // localStorage.setItem('token', JSON.stringify(token));
+            // cookieService.set('token', JSON.stringify(token));
+            localStorage.setItem('token', JSON.stringify(token));
             return this;
         } catch (e) {
             return this;
@@ -83,7 +83,7 @@ export class AuthService {
     }
 
     async logout() {
-        const cookieService = AppInjector.get<CookieService>(CookieService);
+        // const cookieService = AppInjector.get<CookieService>(CookieService);
         // Hit the revoke token url
         try {
             await this.http.post<IRequestResponse>(`${environment.BASE_URL}/oauth/revoke-token`, {token: store.getState().user.token}, {withCredentials: true}).toPromise();
@@ -93,8 +93,8 @@ export class AuthService {
         }
 
         AuthStateActions.logout();
-        // localStorage.removeItem('token');
-        cookieService.delete('token');
+        localStorage.removeItem('token');
+        // cookieService.delete('token');
         this.stopRefreshTokenTimer();
         return await this.router.navigate(['/login']);
     }
